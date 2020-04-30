@@ -26,8 +26,6 @@ class LogStash::Codecs::Nmap < LogStash::Codecs::Base
   config :emit_ports, :validate => :boolean, :default => true
   # Emit each hop_tuple of the traceroute with type 'nmap_traceroute_link'
   config :emit_traceroute_links, :validate => :boolean, :default => true
-  # Emit script data with the port information 
-  config :emit_scripts, :validate => :boolean, :default => true
 
   public
   def register
@@ -221,8 +219,9 @@ Nmap::XML.parse(Nmap::XML.parse(    times = host.instance_variable_get(:@node).x
       'fingerprint_method' => service.fingerprint_method.to_s,
       'fingerprint' => service.fingerprint,
       'confidence' => service.confidence,
-      'cpe' => service.cpe
+      'cpe' => hashify_structs(service.cpe)
     }
+
   end
 
   def hashify_port(port)
