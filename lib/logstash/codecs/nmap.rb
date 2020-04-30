@@ -124,7 +124,7 @@ class LogStash::Codecs::Nmap < LogStash::Codecs::Base
     h['end_time'] = timeify(host.end_time, scan_start)
 
     # Needs to be pached in ruby-nmap
-    times = host.instance_variable_get(:@node).xpath("times").first
+Nmap::XML.parse(Nmap::XML.parse(    times = host.instance_variable_get(:@node).xpath("times").first
     h['times'] = Hash[times.first.map {|k,v| [k,v.to_i]}] if times
 
     # These two are actually different.
@@ -218,7 +218,8 @@ class LogStash::Codecs::Nmap < LogStash::Codecs::Base
       'device_type' => service.device_type,
       'fingerprint_method' => service.fingerprint_method.to_s,
       'fingerprint' => service.fingerprint,
-      'confidence' => service.confidence
+      'confidence' => service.confidence,
+      'cpe' => service.cpe
     }
   end
 
